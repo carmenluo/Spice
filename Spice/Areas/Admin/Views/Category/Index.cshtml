@@ -23,7 +23,7 @@
                   <table class="table table-striped border">
                       <tr>
                           <th>
-                              @Html.DisplayNameFor(m => m.Name);
+                              @Html.DisplayNameFor(m => m.Name)
                           </th>
                           <th>
                           </th>
@@ -34,11 +34,18 @@
                       {
                           <tr>
                               <td>
-                                  @Html.DisplayFor(m => item.Name);
+                                  @Html.DisplayFor(m => item.Name)
                               </td>
                               <td>
-                                  EDIT | DELETE | DETAILS
+                                  <partial name="_CreateDetailDeletePartial" model="item.Id" />
                               </td>
+                              <td>
+                                  <a class="btn btn-danger text-white" value="Delete" asp-action="Delete" asp-route-Id="@item.Id"></a>
+                                  <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are you sure')">
+                                      <button>delete again</button>
+                                         </form>
+                              </td>
+                             
                           </tr>
                       }
                   </table>

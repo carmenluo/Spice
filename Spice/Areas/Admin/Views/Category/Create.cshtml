@@ -1,0 +1,26 @@
+﻿@model Spice.Models.Category
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h1 class="text-info">Create Category</h1>
+<form method="post" asp-action="Create">
+    <div class="backgroundwhiteBorder">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="from-group row">
+            <div class="col-2">
+                <label asp-for="Name"></label>
+            </div>
+
+            <div class="col-5 ">
+                <input asp-for="Name" class=" form-control">
+            </div>
+
+            <span asp-validation-for="Name" class="text-danger"></span>
+
+        </div><br />
+        <partial name="_CreateReturnPartial" />
+    </div>
+</form>
+
