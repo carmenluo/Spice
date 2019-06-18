@@ -1,0 +1,85 @@
+﻿@model Spice.Models.ViewModel.SubCategoryandCategoryViewModel
+@using Spice.Extensions
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<partial name="_StatusMessage" model="Model.ErrorMessage" />
+<h2 class="text-info">Sub Category Detalis</h2>
+<div class="border backgroundwhite row">
+    <div class="col-8 border-right">
+        <form method="post" asp-action="Edit">
+            <div >
+               <input id="ddlCategoryList" asp-for="SubCategory.CategoryId" type="hidden"/>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="SubCategory.Category.Name" class="col-form-label"></label>
+                </div>
+
+                <div class="col-5">
+
+                    <input  asp-for="SubCategory.Category.Name" disabled />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+
+                    <label asp-for="SubCategory.Name" class="col-form-label">
+
+                    </label>
+
+                </div>
+                <div class="col-5">
+                    <input asp-for="SubCategory.Name" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="offset-1">
+                    <partial name="_DetailsReturnPartial" model="Model.SubCategory.Id" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-3">
+        @if (Model.SubCategoryList.Count() > 0)
+        {
+            <p>Existing Subcategories:</p>
+            <div id="SubCategoryList">
+                <ul class="list-group"></ul>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function updateSubCategoryList() {
+            var categorySelected = document.getElementById("ddlCategoryList").value;
+            $list = $('#SubCategoryList');
+
+            $.ajax({
+                url: '/Admin/SubCategory/GetSubCategoryList/' + categorySelected,
+                type: 'GET',
+                datatype: 'text',
+                success: function (data) {
+                    results =(data);
+                    $list.html('');
+                    $list.append('<ul class="list-group">')
+                    for (i in results) {
+                        $list.append('<li class="list-group-item">' + results[i].text + '</li>');
+                    }
+                    $list.append('</ul>');
+
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            updateSubCategoryList();
+        });
+
+    </script>
+}
