@@ -58,6 +58,26 @@ namespace Spice.Areas.Admin.Controllers
             };
             return View(model);
         }
+        //GET - Details
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            SubCategory subcategory = await _db.SubCategory.FindAsync(id);
+            if (subcategory == null)
+            {
+                return NotFound();
+            }
+            SubCategoryandCategoryViewModel model = new SubCategoryandCategoryViewModel()
+            {
+                CategoryList = await _db.Category.ToListAsync(),
+                SubCategory = subcategory,
+                SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
+            };
+            return View(model);
+        }
         //POST - EDIT
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -120,6 +140,25 @@ namespace Spice.Areas.Admin.Controllers
                 };
                 return View(_model);
            
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var deleteItem = await _db.SubCategory.FindAsync(id);
+            if (deleteItem == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _db.SubCategory.Remove(deleteItem);
+                await _db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
         }
         [ActionName("GetSubCategoryList")]
         public async Task<IActionResult> GetSubCategoryList(int id)
