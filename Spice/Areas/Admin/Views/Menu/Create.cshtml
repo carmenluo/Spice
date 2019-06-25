@@ -1,0 +1,75 @@
+﻿@model Spice.Models.ViewModel.MenuAndCategoryViewModel
+@using Spice.Extensions
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+
+<h2 class="text-info">Create Menu</h2>
+<div class="border backgroundwhite row">
+    <div class="col-8 border-right">
+        <form method="post" asp-action="Create" enctype="multipart/form-data">
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Menu.Name" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Menu.Name" class="form-control" />
+                </div>
+                <span asp-validation-for="Menu.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Menu.Description" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    @Html.TextAreaFor(m => m.Menu.Description)
+                </div>
+                <span asp-validation-for="Menu.Name" class="text-danger"></span>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Menu.Price" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Menu.Price" class="form-control" />
+                </div>
+                <span asp-validation-for="Menu.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Menu.Image" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input type="file" name="files" class="form-control" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Menu.CategoryId" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <select asp-for="@Model.Menu.CategoryId" id="CategoryId" asp-items="Model.Category.ToSelectListItem(Model.Menu.CategoryId)" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Menu.SubCategoryId" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <select asp-for="@Model.Menu.SubCategoryId" name="SubCategoryId" id="SubCategoryId" asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="offset-1">
+                    <partial name="_CreateReturnPartial" />
+                </div>
+            </div>
+        </form>
+    </div>
+ 
+</div>
