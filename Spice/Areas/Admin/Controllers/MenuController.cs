@@ -38,7 +38,7 @@ namespace Spice.Areas.Admin.Controllers
         //Get - Create
         public IActionResult Create()
         {
-            return View();
+            return View(MenuAndCategoryViewModel);
         }
     }
 }
