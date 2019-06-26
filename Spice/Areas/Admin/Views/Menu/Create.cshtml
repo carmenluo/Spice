@@ -64,6 +64,14 @@
                     <select asp-for="@Model.Menu.SubCategoryId" name="SubCategoryId" id="SubCategoryId" asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control"></select>
                 </div>
             </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Menu.Spicyness" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <select asp-for="Menu.Spicyness" asp-items="Html.GetEnumSelectList<Menu.ESpicy>()" class="form-control"></select>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="offset-1">
                     <partial name="_CreateReturnPartial" />
@@ -71,5 +79,48 @@
             </div>
         </form>
     </div>
- 
+
 </div>
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            updateSubCategoryList();
+            $('#CategoryId').change(function () {
+                updateSubCategoryList();
+            });
+        });
+
+        function updateSubCategoryList() {
+            //    var categorySelected = document.getElementById("CategoryId").value;
+            //    $list = $('#SubCategoryId');
+
+            //    $.ajax({
+            //        url: '/Admin/SubCategory/GetSubCategoryList/' + categorySelected,
+            //        type: 'GET',
+            //        datatype: 'text',
+            //        success: function (data) {
+            //            results = data;
+            //            $list.html(' ');
+            //            $list.append('<select name="Menu.CategoryId" class="form-control" id="CategoryId" data-val-required="The Category Field REQURED." data-val="true">')
+            //            for (i in results) {
+            //                $list.append('<option value="' + results[i].value + '"> ' + results[i].text + '</option>');
+            //            }
+            //            $list.append('</select>');
+            //        }
+            //    });
+            //}
+            var url ='@Url.Content("~/")'+"Admin/SubCategory/GetSubCategoryList";
+            var ddlsource = '#CategoryId';
+            $.getJSON(url, {id: $(ddlsource).val()}, function(data) {
+                    var items = '';
+                    $('#SubCategoryId').empty();
+                    $.each(data, function (i, subcategory) {
+                        items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                    });
+                    $('#SubCategoryId').html(items);
+                })
+        }
+    </script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}}
