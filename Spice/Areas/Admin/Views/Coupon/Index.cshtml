@@ -42,21 +42,20 @@
                         @Html.DisplayFor(m => item.Name)
                     </td>
                     <th>
-                        @Html.DisplayNameFor(m => m.CouponType)
+                        
+                        @Enum.GetName(typeof(Coupon.ECouponType), Convert.ToInt32(item.CouponType))
+
                     </th>
                     <th>
-                        @Html.DisplayNameFor(m => m.Discount)
+                        @Html.DisplayFor(m => item.Discount)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(m => m.isActive)
+                        @Html.DisplayFor(m => item.isActive)
                     </th>
                     <td>
                         <partial name="_CreateDetailDeletePartial" model="item.Id" />
                     </td>
-                    <td>
-                        <a class="btn btn-danger text-white" value="Delete" asp-action="Delete" asp-route-Id="@item.Id"></a>
-                        
-                    </td>
+                   
 
                 </tr>
                 }
