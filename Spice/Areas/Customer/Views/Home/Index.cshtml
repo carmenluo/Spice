@@ -1,0 +1,31 @@
+﻿@model Spice.Models.ViewModel.IndexViewModel
+<br/>
+@if (Model.CouponItems.ToList().Count > 0)
+{
+    <div class="border">
+        <div class="carousel" data-ride="carousel" data-interval="5000" data-pause="hover">
+            @for (int i = 0; i < Model.CouponItems.Count(); i++)
+            {
+                if (i == 0)
+                {
+                    <div class="carousel-item active row">
+                        <img src="data:image/png;base64,@Convert.ToBase64String(@Model.CouponItems.ToList()[i].Picture);" height="50px" class="d-block " />
+                        <div>@Model.CouponItems.ToList()[i].Name</div>
+                        <div>@Model.CouponItems.ToList()[i].MinimumAmount</div>
+                    </div>
+
+                }
+
+               else
+                {
+                    <div class="carousel-item row">
+                        <img src="data:image/png;base64,@Convert.ToBase64String(@Model.CouponItems.ToList()[i].Picture);" height="50px" class="d-block " />
+                        <div>@Model.CouponItems.ToList()[i].Name</div>
+                        <div>@Model.CouponItems.ToList()[i].MinimumAmount</div>
+                    </div>
+
+                }
+            }
+        </div>
+    </div>
+}
